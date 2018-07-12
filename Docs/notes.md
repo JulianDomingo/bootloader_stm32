@@ -1,8 +1,11 @@
+## Side Notes
+    * Like RAM, flash memory is R/W, but also non-volatile (writes are saved even when power is shutoff).
+        * Flash isn't nearly as fast as RAM (memory)
 ## Section 2 - Introduction
     * Bootloader is a piece of code which:
         * Acts as the application loader
         * Updates the applications when needed
-        * Stored in flash or ROM
+        * **Stored in flash or ROM (in addition to vector table)**
     * IAP (In Application Programming) vs. ISP (In System Programming)
         * IAP: When ICDP isn't available in a board, **NEEDS** the bootloader to write or update your application binary into flash memory / ROM of board
         * ISP: makes use of in-circuit debugger / programmer (ICDP) to debug program and activate running of bootloader program upon board reset (through switching of boot pins)
@@ -41,15 +44,22 @@
                 * Reset handler handles initializations the programmer specifies, written in C / ASM
             4. main() function is called from within reset handler
         * Memory Aliasing
+            * **Specific memory aliasing choices are dependent on microcontroller manufacturer**
             * In Cortex-M processors, user flash (flash memory) is mapped from 0x0800_0000 onwards to 0x0000_0000 onwards.
                 * Content starting at 0x0800_0000 is the same as the content starting at 0x0000_0000
                 * Example:
                     * When processor requests to read the contents of 0x0800_0004, memory sees the request as a read to 0x0000_0004 
-    * Boot Configurations of STM32F
+    * Boot Configurations of **STM32F**
+        * Boot simply means the microcontroller will execute instructions from selected area of memory
         * 2 boot mode selection pins:
             * **<BOOT0, BOOT1>**:
                 * <X, 0>: boot from main memory (flash)
+                    * In this case, the 0th memory address is aliased to the base address of flash memory
                 * <0, 1>: boot from ROM (system memory)
+                    * In this case, the 0th memory address is aliased to the base address of ROM
                 * <1, 1>: boot from embedded SRAM
-   
+                    * In this case, the 0th memory address is aliased to the base address of RAM
+        * **Note**: the base addresses of ROM/SRAM/flash are microcontroller-dependent. Must look at *data sheet* for the microcontroller being to see specifics of memory mapping.                    
+## Section 4 - Development Board Information   
+    * 
 
