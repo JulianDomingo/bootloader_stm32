@@ -61,5 +61,6 @@
                     * In this case, the 0th memory address is aliased to the base address of RAM
         * **Note**: the base addresses of ROM/SRAM/flash are microcontroller-dependent. Must look at *data sheet* for the microcontroller being to see specifics of memory mapping.                    
 ## Section 4 - Development Board Information   
-    * 
-
+    * STM32F407 - ICDP board  
+        * 8MHz external clock for microcontroller processor, but by default doesn't use it (uses internal clock)
+        * **Need USB to UART dongle**
